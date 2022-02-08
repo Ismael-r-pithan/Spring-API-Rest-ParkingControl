@@ -100,8 +100,14 @@ public class ParkingSpotController {
         if(!parkingSpotModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking spot not foud");
         }
+
+        var parkingSpotModel = new ParkingSpotModel();
+        BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
+        parkingSpotModel.setId(parkingSpotModelOptional.get().getId());
+        parkingSpotModel.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
+
         // usar model mapper
-        var parkingSpotModel = parkingSpotModelOptional.get();
+       /* var parkingSpotModel = parkingSpotModelOptional.get();
         parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
         parkingSpotModel.setLicensePlaterCar(parkingSpotDto.getLicensePlaterCar());
         parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
@@ -109,7 +115,7 @@ public class ParkingSpotController {
         parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
         parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
         parkingSpotModel.setApartment(parkingSpotDto.getApartment());
-        parkingSpotModel.setBlock(parkingSpotDto.getBlock());
+        parkingSpotModel.setBlock(parkingSpotDto.getBlock());*/
 
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
     }
