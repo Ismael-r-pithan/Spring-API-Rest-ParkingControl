@@ -12,12 +12,15 @@ import com.parkingcontrol.api.repositories.ParkingSpotRepository;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class ParkingSpotService {
     
-    private final ParkingSpotRepository parkingSpotRepository;
+    private ParkingSpotRepository parkingSpotRepository;
 
 
     @Transactional
@@ -27,17 +30,17 @@ public class ParkingSpotService {
 
 
     public boolean existsByLicensePlateCar(String licensePlaterCar) {
-        return existsByLicensePlateCar(licensePlaterCar);
+        return parkingSpotRepository.existsByLicensePlateCar(licensePlaterCar);
     }
 
 
     public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
-        return existsByParkingSpotNumber(parkingSpotNumber);
+        return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
     }
 
 
     public boolean existsByApartmentAndBlock(String apartment, String block) {
-        return existsByApartmentAndBlock(apartment, block);
+        return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
     }
 
     public List<ParkingSpotModel> findAll() {
