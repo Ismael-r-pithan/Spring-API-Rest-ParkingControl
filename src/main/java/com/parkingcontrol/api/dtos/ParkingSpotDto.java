@@ -3,8 +3,12 @@ package com.parkingcontrol.api.dtos;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import lombok.Singular;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 public class ParkingSpotDto {
 
     @NotBlank

@@ -1,8 +1,20 @@
 package com.parkingcontrol.api.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+import javax.validation.Valid;
+
+import com.parkingcontrol.api.dtos.ParkingSpotDto;
+import com.parkingcontrol.api.model.ParkingSpotModel;
 import com.parkingcontrol.api.service.ParkingSpotService;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,5 +28,14 @@ public class ParkingSpotController {
     
     private final ParkingSpotService parkingSpotService;
 
+    @PostMapping
+    public ResponseEntity<?> saveParkingSpot(@RequestBody @Valid ParkingSpotDto parkingSpotDto) {
+        var parkingSpotModel = new ParkingSpotModel();
 
+        BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
+        parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
+
+    }
 }
